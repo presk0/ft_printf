@@ -6,17 +6,14 @@
 #    By: nidionis <nidionis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 15:16:38 by supersko          #+#    #+#              #
-#    Updated: 2024/10/22 19:06:00 by nidionis         ###   ########.fr        #
+#    Updated: 2024/10/31 16:22:21 by nidionis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = *.c
+SRC = ft_printf.c
 
-OBJS = ${SRCS:.c=.o}
+OBJ = ${SRC:.c=.o}
 
-OBJS_DIR = obj/
-
-OBJS_ABS = $(addprefix ${OBJS_DIR}, ${OBJS})
 
 NAME = libftprintf.a
 
@@ -26,27 +23,21 @@ CC = cc
 
 all: ${NAME}
 
-${NAME}: ${OBJS_ABS}
-	@ar rcs $@ $?
+${NAME}: ${OBJ}
+	ar rcs $@ ${OBJ}
 
-${OBJS_DIR}%.o: %.c
-	@mkdir -p $(OBJS_DIR)
-	${CC} ${CFLAGS} -c $< -o $@
+%o.: %.c
+	${cc} ${CFLAGS} -o $@ -c $< 
 
 test:
-	${CC} ${SRCS}
-	./a.out ${ARG1} ${ARG2} ${ARG3}
-	rm a.out
-
-debug:
-	${CC} -g ${SRCS}
-	lldb a.out
-	rm a.out
+	gcc *.c 
 
 clean:
-	rm -rf ${OBJS_ABS}
+	rm -rf ${OBJ} ${OBJS_BONUS}
 
 fclean: clean
 	rm -rf ${NAME}
 
 re: fclean all
+
+.PHONY: all test clean fclen re
