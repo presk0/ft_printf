@@ -6,7 +6,7 @@
 /*   By: nidionis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/10/31 20:55:10 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/02 13:51:34 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,16 @@ size_t	ft_putnbrbase_fd(long long int n, char *base, size_t base_len, int fd)
 	if (n < 0)
 	{
 		len += write(fd, "-", 1);
-		ft_putnbrbase_fd(-1 * n, base, base_len, fd);
+		if (-(n) != n)
+			ft_putnbrbase_fd(-1 * n, base, base_len, fd);
 	}
-	else if ((size_t) n >= base_len)
+	else if (n > base_len)
 	{
-		ft_putnbrbase_fd(n / base_len, base, base_len, fd);
-		//ft_putnbrbase_fd(n % base_len, base, base_len, fd);
+		len += ft_putnbrbase_fd(n / base_len, base, base_len, fd);
+		len += ft_putnbrbase_fd(n % base_len, base, base_len, fd);
 	}
 	else
-	{
-		len += ft_writenbase(n, base, fd);
-	}
+		len += ft_writenbase(n % base_len, base, fd);
 	return (len);
 }
 
@@ -98,15 +97,15 @@ static size_t	ft_intlen(unsigned long long int n)
 	return (len);
 }
 
-size_t	ft_putptr(unsigned long int ptr, int fd)
+size_t	ft_putptr(unsigned long ptr, int fd)
 {
-	size_t	len;
-	size_t	i;
+	size_t			i;
+	static	size_t	len;
 
-	len = ft_intlen(ptr);
+	if (!ptr)
+		return (write(fd, "(nil)", 5));
 	len += write(fd, "0x", 2);
-	i = 0;
-	ft_putnbrbase_fd(ptr, "0123456789abcdef", 16, FD);
+	len += ft_putnbrbase_fd(ptr / 16, "0123456789abcdef", 16, fd);
 	return (len);
 }
 
@@ -151,77 +150,3 @@ int ft_printf(const char *str, ...)
    va_end(ap);
    return (ret_val);
 }
-
-/*
-int main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-	//ft_putnbrbase_fd(atoi(argv[1]), argv[2], ft_strlen(argv[2]), FD);
-	printf(" %p ",(void *) -1);
-	printf("\n");
-	ft_printf(" %p ", (void *)-1);
-	printf("\n");
-
-	printf("\n");
-	ft_printf(" %p ",(void *) 1);
-	printf("\n");
-	printf(" %p ",(void *) 1);
-	printf("\n");
-
-	printf("\n");
-	ft_printf(" %p ",(void *) 15);
-	printf("\n");
-	printf(" %p ",(void *) 15);
-	printf("\n");
-
-	printf("\n");
-	ft_printf(" %p ",(void *) 16);
-	printf("\n");
-	printf(" %p ",(void *) 16);
-	printf("\n");
-
-	printf("\n");
-	printf(" %p ",(void *) 1700000000000);
-	printf("\n");
-	printf(" %p ",(void *) 1700000000000);
-	printf("\n");
-
-	printf("\n");
-	printf(" %p ",(void *) LONG_MIN);
-	printf("\n");
-	ft_printf(" %p ",(void *) LONG_MIN);
-	printf("\n");
-
-	printf("\n");
-	printf(" %p %p ", LONG_MIN, LONG_MAX);
-	printf("\n");
-	ft_printf(" %p %p ", LONG_MIN, LONG_MAX);
-	printf("\n");
-
-	printf("\n");
-	ft_printf(" %p %p ", INT_MIN, INT_MAX);
-	printf("\n");
-	printf(" %p %p ", INT_MIN, INT_MAX);
-	printf("\n");
-
-	printf("\n");
-	ft_printf(" %p %p ", ULONG_MAX, -ULONG_MAX);
-	printf("\n");
-	printf(" %p %p ", ULONG_MAX, -ULONG_MAX);
-	printf("\n");
-
-	printf("\n");
-	ft_printf(" %p %p ", 0, 0);
-	printf("\n");
-	printf(" %p %p ", 0, 0);
-	printf("\n");
-
-	printf("\n");
-	ft_printf(" %p %p ", ULONG_MAX - 1, -ULONG_MAX - 1);
-	printf("\n");
-	printf(" %p %p ", ULONG_MAX - 1, -ULONG_MAX - 1);
-	printf("\n");
-
-}
-*/
