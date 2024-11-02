@@ -6,7 +6,7 @@
 /*   By: nidionis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/11/02 15:32:18 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/02 21:18:14 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,27 @@ int	print_item(va_list ap, char c)
 	if (c == 'i' || c == 'd')
 		return (ft_putibase_fd((int) va_arg(ap, int), "0123456789", 10, FD));
 	if (c == 'u')
-		return (ft_putubase_fd(va_arg(ap, unsigned int), "0123456789", 10, FD));
+		return (ft_putubase_fd(va_arg(ap, unsigned), "0123456789", 10, FD));
 	if (c == 'x')
-		return (ft_putibase_fd(va_arg(ap, int), "0123456789abcdef", 16, FD));
+		return (ft_putubase_fd(va_arg(ap, unsigned), "0123456789abcdef", 16, FD));
 	if (c == 'X')
-		return (ft_putibase_fd(va_arg(ap, int), "0123456789ABCDEF", 16, FD));
+		return (ft_putubase_fd(va_arg(ap, unsigned), "0123456789ABCDEF", 16, FD));
 	if (c == '%')
 		return (write(FD, "%", 1));
-	return (0);
+	if (!c)
+		return (0);
+	write(FD, "%", 1);
+	write(FD, &c, 1);
+	return (2);
 }
 
+/* cette fonction ne renvoit pas -1 en cas de mauvais formatage
+ * La fonction printf etant trop complexe la ligne de code est laisse pour la correction */
 int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
 	int		ret_val;
+	int		p_itm;
 
 	ret_val = 0;
 	va_start(ap, str);
@@ -94,10 +101,21 @@ int	ft_printf(const char *str, ...)
 	while (*str)
 	{
 		if (*str == '%')
-			ret_val += print_item(ap, *(++str));
+		{
+			p_itm = print_item(ap, *(++str));
+			if (p_itm == -1)
+				ret_val = -1;
+			else
+				ret_val += p_itm;
+		}
 		else
-			ret_val += write(FD, str, 1);
-		str++;
+		{
+			write(FD, str, 1);
+			if (ret_val != -1)
+				ret_val++;
+		}
+		if (*str)
+			str++;
 	}
 	va_end(ap);
 	return (ret_val);
