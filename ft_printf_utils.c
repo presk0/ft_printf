@@ -6,7 +6,7 @@
 /*   By: nidionis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/11/02 15:32:55 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:56:36 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*ft_strchr(const char *str, int c)
 
 size_t	ft_putstr_fd(char *s, int fd)
 {
+	if (!s)
+		return (write(fd, "(null)", 6));
 	return (write(fd, s, ft_strlen(s)));
 }
 

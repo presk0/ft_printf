@@ -6,7 +6,7 @@
 /*   By: nidionis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/11/02 21:18:14 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:00:05 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ size_t	ft_putibase_fd(long long int n, char *base, size_t base_len, int fd)
 	return (len);
 }
 
-size_t	ft_putubase_fd(\
+size_t	putubase(\
 			long long unsigned n, char *base, size_t base_len, int fd)
 {
 	size_t	len;
@@ -57,7 +57,7 @@ size_t	ft_putptr(unsigned long ptr, int fd)
 	if (!ptr)
 		return (write(fd, "(nil)", 5));
 	len += write(fd, "0x", 2);
-	len += ft_putubase_fd(ptr, "0123456789abcdef", 16, fd);
+	len += putubase(ptr, "0123456789abcdef", 16, fd);
 	return (len);
 }
 
@@ -72,22 +72,20 @@ int	print_item(va_list ap, char c)
 	if (c == 'i' || c == 'd')
 		return (ft_putibase_fd((int) va_arg(ap, int), "0123456789", 10, FD));
 	if (c == 'u')
-		return (ft_putubase_fd(va_arg(ap, unsigned), "0123456789", 10, FD));
+		return (putubase(va_arg(ap, unsigned), "0123456789", 10, FD));
 	if (c == 'x')
-		return (ft_putubase_fd(va_arg(ap, unsigned), "0123456789abcdef", 16, FD));
+		return (putubase(va_arg(ap, unsigned), "0123456789abcdef", 16, FD));
 	if (c == 'X')
-		return (ft_putubase_fd(va_arg(ap, unsigned), "0123456789ABCDEF", 16, FD));
+		return (putubase(va_arg(ap, unsigned), "0123456789ABCDEF", 16, FD));
 	if (c == '%')
 		return (write(FD, "%", 1));
-	if (!c)
-		return (0);
 	write(FD, "%", 1);
+	if (!c)
+		return (-1);
 	write(FD, &c, 1);
 	return (2);
 }
 
-/* cette fonction ne renvoit pas -1 en cas de mauvais formatage
- * La fonction printf etant trop complexe la ligne de code est laisse pour la correction */
 int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
@@ -105,7 +103,7 @@ int	ft_printf(const char *str, ...)
 			p_itm = print_item(ap, *(++str));
 			if (p_itm == -1)
 				ret_val = -1;
-			else
+			if (ret_val != -1)
 				ret_val += p_itm;
 		}
 		else
