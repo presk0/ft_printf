@@ -6,7 +6,7 @@
 /*   By: supersko <ndionis@student.42mulhouse.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:03:26 by supersko          #+#    #+#             */
-/*   Updated: 2024/11/02 15:36:07 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:53:06 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define FD 1
 # define FLAGS "cspdiuxX%"
 
+void	loop_norminette(char **str_addr, va_list ap, int *p_itm, int *ret_val);
 size_t	ft_strlen(char *s);
 size_t	ft_putstr_fd(char *s, int fd);
 int		ft_putchar(char c);

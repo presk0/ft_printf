@@ -6,7 +6,7 @@
 /*   By: nidionis <nidionis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/11/04 15:29:44 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:30:32 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	main(int argc, char **argv)
 
 	//ft_putnbrbase_fd(atoi(argv[1]), argv[2], ft_strlen(argv[2]), FD);
 
-	//output = printf(str, atoi(argv[2]), atoi(argv[3]));
+	/output = printf(str, atoi(argv[2]), atoi(argv[3]));
 	//printf("output printf: %d\n", output);
 	//printf("\n");
-	//output = ft_printf(str, atoi(argv[2]), atoi(argv[3]));
-	//printf("output ft_printf: %d\n", output);
-	//printf("\n");
+	output = ft_printf(str, atoi(argv[2]));
+	printf("output ft_printf: %d\n", output);
+	printf("\n");
 
 	output = printf(str, -1);
 	printf("\n");

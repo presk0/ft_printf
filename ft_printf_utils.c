@@ -6,7 +6,7 @@
 /*   By: nidionis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/11/04 15:56:36 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:52:52 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,22 @@ int	ft_putchar(char c)
 	return (write(FD, &c, 1));
 }
 
-size_t	ft_writenbase(long long int n, char *base, int fd)
+void	loop_norminette(char **str_addr, va_list ap, int *p_itm, int *ret_val)
 {
-	char	c;
-
-	c = base[n];
-	return (write(fd, &c, fd));
+	if (**str_addr == '%')
+	{
+		*p_itm = print_item(ap, *(++(*str_addr)));
+		if (*p_itm == -1)
+			*ret_val = -1;
+		if (*ret_val != -1)
+			*ret_val += *p_itm;
+	}
+	else
+	{
+		write(FD, *str_addr, 1);
+		if (*ret_val != -1)
+			(*ret_val)++;
+	}
+	if (**str_addr)
+		(*str_addr)++;
 }

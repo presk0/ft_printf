@@ -6,7 +6,7 @@
 #    By: nidionis <nidionis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 15:16:38 by supersko          #+#    #+#              #
-#    Updated: 2024/10/31 16:22:21 by nidionis         ###   ########.fr        #
+#    Updated: 2024/11/08 14:59:24 by nidionis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,6 @@ all: ${NAME}
 
 ${NAME}: ${OBJ}
 	ar rcs $@ ${OBJ}
-
-%o.: %.c
-	${cc} ${CFLAGS} -o $@ -c $< 
-
-test:
-	gcc *.c 
 
 clean:
 	rm -rf ${OBJ} ${OBJS_BONUS}

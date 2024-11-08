@@ -6,7 +6,7 @@
 /*   By: nidionis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/11/04 16:00:05 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:54:53 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ size_t	ft_putibase_fd(long long int n, char *base, size_t base_len, int fd)
 		len += ft_putibase_fd(n % base_len, base, base_len, fd);
 	}
 	else
-		len += ft_writenbase(n % base_len, base, fd);
+		len += write(FD, &base[n % base_len], 1);
 	return (len);
 }
 
@@ -45,7 +45,7 @@ size_t	putubase(\
 		len += ft_putibase_fd(n % base_len, base, base_len, fd);
 	}
 	else
-		len += ft_writenbase(n % base_len, base, fd);
+		len += write(FD, &base[n % base_len], 1);
 	return (len);
 }
 
@@ -79,9 +79,9 @@ int	print_item(va_list ap, char c)
 		return (putubase(va_arg(ap, unsigned), "0123456789ABCDEF", 16, FD));
 	if (c == '%')
 		return (write(FD, "%", 1));
-	write(FD, "%", 1);
 	if (!c)
 		return (-1);
+	write(FD, "%", 1);
 	write(FD, &c, 1);
 	return (2);
 }
@@ -92,29 +92,13 @@ int	ft_printf(const char *str, ...)
 	int		ret_val;
 	int		p_itm;
 
+	p_itm = 0;
 	ret_val = 0;
 	va_start(ap, str);
 	if (!str)
 		return (-1);
 	while (*str)
-	{
-		if (*str == '%')
-		{
-			p_itm = print_item(ap, *(++str));
-			if (p_itm == -1)
-				ret_val = -1;
-			if (ret_val != -1)
-				ret_val += p_itm;
-		}
-		else
-		{
-			write(FD, str, 1);
-			if (ret_val != -1)
-				ret_val++;
-		}
-		if (*str)
-			str++;
-	}
+		loop_norminette((char **)&str, ap, &p_itm, &ret_val);
 	va_end(ap);
 	return (ret_val);
 }
