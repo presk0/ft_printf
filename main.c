@@ -6,36 +6,34 @@
 /*   By: nidionis <nidionis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/11/08 14:30:32 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/11/16 15:11:21 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <limits.h>
-#include "ft_printf.h"
+#include "libftprintf.h"
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-	char *str = argv[1];
-	int output;
+	char	*str;
+	int		output;
+	char	*str;
+	int		output;
 
-	//ft_putnbrbase_fd(atoi(argv[1]), argv[2], ft_strlen(argv[2]), FD);
-
-	/output = printf(str, atoi(argv[2]), atoi(argv[3]));
-	//printf("output printf: %d\n", output);
-	//printf("\n");
-	output = ft_printf(str, atoi(argv[2]));
-	printf("output ft_printf: %d\n", output);
+	str = argv[1];
 	printf("\n");
-
-	output = printf(str, -1);
+	printf("[ft_printf] ");
+	printf("\n");
+	output = ft_printf(str, -1);
 	printf("\n");
 	printf("output printf: %d\n", output);
 	printf("\n");
-	ft_printf(str, -1);
+	printf("[printf] ");
+	printf("\n");
+	output = printf(str, -1);
+	printf("\n");
 	printf("output ft_printf: %d\n", output);
 	printf("\n");
 
@@ -48,7 +46,7 @@ int	main(int argc, char **argv)
 	printf("\n");
 	printf("[printf] ");
 	printf("\n");
-	output = printf(str , 0);
+	output = printf(str, 0);
 	printf("\n");
 	printf("output ft_printf: %d\n", output);
 	printf("\n");
@@ -144,6 +142,12 @@ int	main(int argc, char **argv)
 	printf("\n");
 	output = printf(str, LONG_MIN);
 	printf("\n");
+	printf("output printf: %d\n", output);
+	printf("\n");
+	printf("[printf] ");
+	printf("\n");
+	output = ft_printf(str, LONG_MIN);
+	printf("\n");
 	printf("output ft_printf: %d\n", output);
 	printf("\n");
 
@@ -160,7 +164,6 @@ int	main(int argc, char **argv)
 	printf("\n");
 	printf("output ft_printf: %d\n", output);
 	printf("\n");
-
 
 	printf("\n");
 	printf("[ft_printf] ");
@@ -198,11 +201,9 @@ int	main(int argc, char **argv)
 	printf("\n");
 	printf("[printf] ");
 	printf("\n");
-	output =printf(str, ULONG_MAX);
+	output = printf(str, ULONG_MAX);
 	printf("\n");
 	printf("output printf: %d\n", output);
 	printf("\n");
-
-	//ft_printf("afsfg%p\n", 16);
 	return (0);
 }
