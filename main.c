@@ -63,6 +63,7 @@ int	main(int argc, char **argv)
 	printf("\n");
 	output = printf("\n");
 	printf("[ft_printf] ");
+
 	printf("\n");
 	output = ft_printf(str, ULONG_MAX);
 	printf("\n");
@@ -117,13 +118,6 @@ int	main(int argc, char **argv)
 	printf("output ft_printf: %d\n", output);
 	printf("\n");
 
-	printf("\n");
-	printf("[ft_printf] ");
-	printf("\n");
-	output = ft_printf(str, LONG_MIN);
-	printf("\n");
-	printf("output printf: %d\n", output);
-	printf("\n");
 	output = printf("\n");
 	printf("[ft_printf] ");
 	printf("\n");
@@ -189,20 +183,6 @@ int	main(int argc, char **argv)
 	printf("[printf] ");
 	printf("\n");
 	output = printf(str, INT_MIN);
-	printf("output printf: %d\n", output);
-	printf("\n");
-
-	output = printf("\n");
-	printf("[ft_printf] ");
-	printf("\n");
-	output = ft_printf(str, ULONG_MAX);
-	printf("\n");
-	printf("output ft_printf: %d\n", output);
-	printf("\n");
-	printf("[printf] ");
-	printf("\n");
-	output = printf(str, ULONG_MAX);
-	printf("\n");
 	printf("output printf: %d\n", output);
 	printf("\n");
 	return (0);
