@@ -19,8 +19,6 @@ int	main(int argc, char **argv)
 {
 	char	*str;
 	int		output;
-	char	*str;
-	int		output;
 
 	str = argv[1];
 	printf("\n");
